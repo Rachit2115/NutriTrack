@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     ----------------------------- */
 
     const model = gemini.getGenerativeModel({
-      model: 'gemini-1.5-flash-latest'
+      model: 'models/gemini-2.5-flash'
     })
 
     const prompt = `
