@@ -6,13 +6,15 @@ const gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 export async function GET() {
   try {
     const models = [
-      'gemini-1.5-pro',
-      'gemini-1.5-pro-latest', 
-      'gemini-1.5-flash',
-      'gemini-1.5-flash-latest',
-      'gemini-pro',
-      'gemini-pro-vision',
-      'gemini-2.0-flash-exp'
+      'models/gemini-1.5-pro',
+      'models/gemini-1.5-pro-latest', 
+      'models/gemini-1.5-flash',
+      'models/gemini-1.5-flash-latest',
+      'models/gemini-pro',
+      'gemini-1.5-pro-001',
+      'gemini-1.5-flash-001',
+      'gemini-1.5-pro-002',
+      'gemini-1.5-flash-002'
     ]
     
     const results = []
