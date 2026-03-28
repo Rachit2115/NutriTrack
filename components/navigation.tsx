@@ -297,7 +297,7 @@ export function Navigation() {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center space-x-3">
+              <div className="hidden sm:flex items-center space-x-3">
                 {/* Theme Toggle */}
                 <Button
                   variant="ghost"
@@ -351,14 +351,14 @@ export function Navigation() {
               {/* Theme Toggle - Mobile */}
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="flex items-center space-x-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium w-full text-left"
+                className="flex items-center justify-center space-x-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-50 dark:hover:bg-gray-800 font-medium w-full text-left"
               >
                 {theme === 'dark' ? (
                   <Sun className="h-5 w-5 text-yellow-500" />
                 ) : (
                   <Moon className="h-5 w-5 text-gray-700" />
                 )}
-                <span>Toggle Theme</span>
+                <span className="sm:hidden">Theme</span>
               </button>
               
               {user ? (
@@ -442,7 +442,7 @@ export function Navigation() {
                   </div>
                 </React.Fragment>
               ) : (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Link href="/signin">
                     <Button variant="outline" size="sm" className="w-full border-green-600 text-green-600 hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-900/20">
                       Sign In

@@ -48,7 +48,7 @@ function AppContent() {
           <Navigation />
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 bg-white/60 dark:bg-green-900/60 backdrop-blur-xl border border-green-200/50 dark:border-green-700/50 rounded-xl mb-8 p-1 shadow-lg">
+            <TabsList className="hidden sm:grid grid-cols-2 md:grid-cols-5 bg-white/60 dark:bg-green-900/60 backdrop-blur-xl border border-green-200/50 dark:border-green-700/50 rounded-xl mb-8 p-1 shadow-lg">
               <TabsItem
                 value="dashboard"
                 className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-green-600 data-[state=active]:to-green-500 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-300 text-green-700 dark:text-green-200 hover:text-green-900 dark:hover:text-white"

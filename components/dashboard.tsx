@@ -295,48 +295,48 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
         {/* Daily Calorie Goal - Green card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-xl border-4 border-green-400 dark:border-green-600/40 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]" style={{ backgroundImage: 'url(/cal_goal_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-green-400 dark:border-green-600/40 hover:shadow-xl transition-all duration-300" style={{ backgroundImage: 'url(/cal_goal_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-green-200/50 to-green-100/30 dark:from-green-900/60 dark:to-green-800/40"></div>
           <div className="absolute inset-0 bg-gradient-radial from-green-200/20 dark:from-green-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-sm font-medium text-green-800 dark:text-white">Daily Calorie Goal</CardTitle>
-            <Target className="h-4 w-4 text-green-600 dark:text-green-300" />
+          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
+            <CardTitle className="text-xs sm:text-sm font-medium text-green-800 dark:text-white">Daily Goal</CardTitle>
+            <Target className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 dark:text-green-300" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-3xl font-bold text-green-900 dark:text-white">{goalCalories}</div>
-            <p className="text-xs text-green-700 dark:text-green-200">Based on your profile</p>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-green-900 dark:text-white">{goalCalories}</div>
+            <p className="text-xs sm:text-xs text-green-700 dark:text-green-200 hidden sm:block">Based on your profile</p>
           </CardContent>
         </Card>
 
         {/* Calories Consumed - Purple/Lavender card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-xl border-4 border-purple-400 dark:border-purple-600/40 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]" style={{ backgroundImage: 'url(/cal_consumed_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-purple-400 dark:border-purple-600/40 hover:shadow-xl transition-all duration-300" style={{ backgroundImage: 'url(/cal_consumed_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-purple-200/50 to-purple-100/30 dark:from-purple-900/60 dark:to-purple-800/40"></div>
           <div className="absolute inset-0 bg-gradient-radial from-purple-200/20 dark:from-purple-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-sm font-medium text-purple-800 dark:text-white">Calories Consumed</CardTitle>
-            <Utensils className="h-4 w-4 text-purple-600 dark:text-purple-300" />
+          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
+            <CardTitle className="text-xs sm:text-sm font-medium text-purple-800 dark:text-white">Consumed</CardTitle>
+            <Utensils className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600 dark:text-purple-300" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-3xl font-bold text-purple-900 dark:text-white">{caloriesConsumed}</div>
-            <p className="text-xs text-purple-700 dark:text-purple-200">{Math.round((caloriesConsumed / goalCalories) * 100)}% of daily goal</p>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-purple-900 dark:text-white">{caloriesConsumed}</div>
+            <p className="text-xs sm:text-xs text-purple-700 dark:text-purple-200 hidden sm:block">{Math.round((caloriesConsumed / goalCalories) * 100)}% of daily goal</p>
           </CardContent>
         </Card>
 
         {/* Calories Remaining - Orange/Peach card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-xl border-4 border-orange-400 dark:border-orange-600/40 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]" style={{ backgroundImage: 'url(/calories_burn_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-orange-400 dark:border-orange-600/40 hover:shadow-xl transition-all duration-300" style={{ backgroundImage: 'url(/calories_burn_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-orange-200/50 to-orange-100/30 dark:from-orange-900/60 dark:to-orange-800/40"></div>
           <div className="absolute inset-0 bg-gradient-radial from-orange-200/20 dark:from-orange-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-sm font-medium text-orange-800 dark:text-white">Calories Remaining</CardTitle>
-            <Flame className="h-4 w-4 text-orange-600 dark:text-orange-300" />
+          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
+            <CardTitle className="text-xs sm:text-sm font-medium text-orange-800 dark:text-white">Remaining</CardTitle>
+            <Flame className="h-3 w-3 sm:h-4 sm:w-4 text-orange-600 dark:text-orange-300" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-3xl font-bold text-orange-900 dark:text-white">
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-orange-900 dark:text-white">
               {Math.max(0, goalCalories - caloriesConsumed)}
             </div>
-            <p className="text-xs text-orange-700 dark:text-orange-200">
+            <p className="text-xs sm:text-xs text-orange-700 dark:text-orange-200 hidden sm:block">
               {caloriesConsumed > goalCalories
                 ? `${caloriesConsumed - goalCalories} calories over limit`
                 : "Remaining for today"}
@@ -345,16 +345,16 @@ export default function Dashboard() {
         </Card>
 
         {/* Meal Count - Teal/Cyan card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-xl border-4 border-teal-400 dark:border-teal-600/40 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]" style={{ backgroundImage: 'url(/meal_count_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-teal-400 dark:border-teal-600/40 hover:shadow-xl transition-all duration-300" style={{ backgroundImage: 'url(/meal_count_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-teal-200/50 to-cyan-100/30 dark:from-teal-900/60 dark:to-teal-800/40"></div>
           <div className="absolute inset-0 bg-gradient-radial from-teal-200/20 dark:from-teal-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-sm font-medium text-teal-800 dark:text-white">Meal Count</CardTitle>
-            <TrendingUp className="h-4 w-4 text-teal-600 dark:text-teal-300" />
+          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
+            <CardTitle className="text-xs sm:text-sm font-medium text-teal-800 dark:text-white">Meals</CardTitle>
+            <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-teal-600 dark:text-teal-300" />
           </CardHeader>
           <CardContent className="relative z-10">
-            <div className="text-3xl font-bold text-teal-900 dark:text-white">{dailyEntries.length}</div>
-            <p className="text-xs text-teal-700 dark:text-teal-200">Meals and snacks logged today</p>
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-teal-900 dark:text-white">{dailyEntries.length}</div>
+            <p className="text-xs sm:text-xs text-teal-700 dark:text-teal-200 hidden sm:block">Meals and snacks logged today</p>
           </CardContent>
         </Card>
       </div>
