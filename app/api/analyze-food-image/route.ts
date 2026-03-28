@@ -122,9 +122,32 @@ Dal Makhani
       ingredients: [dishName]
     })
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Food detection error:', error)
-    return getFallbackAnalysis()
+    console.error('Error message:', error?.message || 'Unknown error')
+    console.error('Error stack:', error?.stack || 'No stack trace')
+    console.error('GEMINI_API_KEY exists:', !!process.env.GEMINI_API_KEY)
+    console.error('GEMINI_API_KEY length:', process.env.GEMINI_API_KEY?.length || 0)
+    
+    // Return error details instead of silent fallback
+    return NextResponse.json({
+      success: false,
+      foodName: "Delicious Meal",
+      calories: 350,
+      protein: 20,
+      carbs: 40,
+      fat: 12,
+      servingSize: "1 serving",
+      confidence: 0.75,
+      detectedItems: ["food", "meal"],
+      ingredients: ["Mixed ingredients"],
+      fallback: true,
+      error: error?.message || 'AI analysis failed',
+      debug: {
+        geminiKeyExists: !!process.env.GEMINI_API_KEY,
+        errorType: error?.constructor?.name
+      }
+    })
   }
 }
 
