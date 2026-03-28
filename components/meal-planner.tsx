@@ -16,6 +16,98 @@ export default function MealPlanner() {
   const [selectedDay, setSelectedDay] = useState("day1")
   const [expandedRecipes, setExpandedRecipes] = useState<Set<string>>(new Set())
 
+  // Calculate macro targets based on scientific formulas
+  const calculateMacroTargets = (profile: any) => {
+    console.log('Calculating macro targets for profile:', profile)
+    
+    if (!profile || !profile.weight) {
+      console.log('No profile or weight, returning defaults')
+      return { protein: 150, fat: 65, carbs: 250, calories: 2000 }
+    }
+
+    const weightKg = profile.weight
+    const goal = profile.goal || 'maintenance'
+    
+    console.log('Weight:', weightKg, 'Goal:', goal)
+
+    // Calculate TDEE first
+    let bmr
+    if (profile.gender === "male") {
+      bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5
+    } else {
+      bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161
+    }
+
+    const activityMultipliers: Record<string, number> = {
+      sedentary: 1.2,
+      light: 1.375,
+      moderate: 1.55,
+      active: 1.725,
+      "very-active": 1.9,
+    }
+    const tdee = Math.round(bmr * (activityMultipliers[profile.activityLevel] || 1.2))
+
+    // Adjust calories based on goal
+    let goalCalories = tdee
+    if (goal === "weight-loss") {
+      goalCalories = Math.round(tdee * 0.8)
+    } else if (goal === "muscle-gain") {
+      goalCalories = Math.round(tdee * 1.1)
+    }
+    
+    console.log('TDEE:', tdee, 'Goal Calories:', goalCalories)
+
+    // Protein Factor based on goal
+    let proteinFactor = 1.0 // Normal health default
+    if (goal === 'weight-loss') {
+      proteinFactor = 1.4 // Middle of 1.2-1.6 range
+    } else if (goal === 'muscle-gain') {
+      proteinFactor = 1.9 // Middle of 1.6-2.2 range
+    } else if (goal === 'maintenance' || goal === 'general') {
+      proteinFactor = 0.9 // Middle of 0.8-1.0 range
+    }
+    
+    console.log('Protein Factor:', proteinFactor)
+
+    // Fat Factor based on goal
+    let fatFactor = 0.8 // Normal default
+    if (goal === 'weight-loss') {
+      fatFactor = 0.6 // Low fat diet
+    } else if (goal === 'muscle-gain') {
+      fatFactor = 0.9 // Middle of 0.8-1.0 range
+    }
+    
+    console.log('Fat Factor:', fatFactor)
+
+    // Calculate Protein: Weight (kg) × Protein Factor
+    const proteinGrams = Math.round(weightKg * proteinFactor)
+
+    // Calculate Fat: Weight (kg) × Fat Factor
+    const fatGrams = Math.round(weightKg * fatFactor)
+
+    // Calculate Carbs: (Total Calories - (Protein×4 + Fat×9)) / 4
+    const caloriesFromProtein = proteinGrams * 4
+    const caloriesFromFat = fatGrams * 9
+    const remainingCalories = goalCalories - (caloriesFromProtein + caloriesFromFat)
+    const carbsGrams = Math.max(0, Math.round(remainingCalories / 4))
+    
+    const result = {
+      protein: proteinGrams,
+      fat: fatGrams,
+      carbs: carbsGrams,
+      calories: goalCalories
+    }
+    
+    console.log('Calculated targets:', result)
+
+    return result
+  }
+
+  // Get calculated macro targets
+  const calculatedTargets = currentProfile ? calculateMacroTargets(currentProfile) : { protein: 150, fat: 65, carbs: 250, calories: 2000 }
+  
+  console.log('Final calculatedTargets:', calculatedTargets)
+
   useEffect(() => {
     if (currentProfile) {
       // Check if we have a meal plan in local storage
@@ -132,23 +224,26 @@ export default function MealPlanner() {
             <Target className="h-5 w-5 text-green-600" />
             Daily Nutrition Targets
           </CardTitle>
+          <CardDescription>
+            Based on your profile: {currentProfile.weight}kg, Goal: {currentProfile.goal?.replace('-', ' ')}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">{mealPlan.dailyCalories}</div>
+              <div className="text-2xl font-bold text-green-600">{calculatedTargets.calories}</div>
               <div className="text-sm text-gray-600">kcal</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">{mealPlan.macroTargets.protein}g</div>
+              <div className="text-2xl font-bold text-blue-600">{calculatedTargets.protein}g</div>
               <div className="text-sm text-gray-600">Protein</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-orange-600">{mealPlan.macroTargets.carbs}g</div>
+              <div className="text-2xl font-bold text-orange-600">{calculatedTargets.carbs}g</div>
               <div className="text-sm text-gray-600">Carbs</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{mealPlan.macroTargets.fat}g</div>
+              <div className="text-2xl font-bold text-purple-600">{calculatedTargets.fat}g</div>
               <div className="text-sm text-gray-600">Fat</div>
             </div>
           </div>
