@@ -442,14 +442,14 @@ export function Navigation() {
                   </div>
                 </React.Fragment>
               ) : (
-                <div className="space-y-3">
-                  <Link href="/signin">
-                    <Button variant="outline" size="sm" className="w-full border-green-600 text-green-600 hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-900/20">
+                <div className="flex gap-2 mt-2">
+                  <Link href="/signin" className="flex-1">
+                    <Button variant="outline" size="sm" className="w-full border-green-600 text-green-600 hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-900/20 text-sm">
                       Sign In
                     </Button>
                   </Link>
-                  <Link href="/signup">
-                    <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white">
+                  <Link href="/signup" className="flex-1">
+                    <Button size="sm" className="w-full bg-green-600 hover:bg-green-700 text-white text-sm">
                       Sign Up
                     </Button>
                   </Link>

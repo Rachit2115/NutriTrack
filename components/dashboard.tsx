@@ -421,32 +421,32 @@ export default function Dashboard() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-4 border-green-400 dark:border-green-600/30 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+        <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-2 border-green-400 dark:border-green-600/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
           <CardHeader>
-            <CardTitle className="text-gray-900 dark:text-white">Weekly Calorie Intake</CardTitle>
-            <CardDescription className="text-gray-700 dark:text-green-200">Your calorie consumption over the past week</CardDescription>
+            <CardTitle className="text-gray-900 dark:text-white text-sm sm:text-base">Weekly Calorie Intake</CardTitle>
+            <CardDescription className="text-gray-700 dark:text-green-200 text-xs sm:text-sm">Your calorie consumption over the past week</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px]">
+          <CardContent className="h-[200px] sm:h-[300px]">
             <CalorieChart data={weeklyData} />
           </CardContent>
         </Card>
 
-        <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-4 border-purple-400 dark:border-purple-600/30 shadow-xl hover:shadow-2xl transition-shadow duration-300" style={{ backgroundImage: 'url(/nut_dist_bg.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+        <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-2 border-purple-400 dark:border-purple-600/30 shadow-lg hover:shadow-xl transition-shadow duration-300" style={{ backgroundImage: 'url(/nut_dist_bg.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <CardHeader className="relative z-10">
-            <CardTitle className="text-gray-800 dark:text-white">Macronutrient Distribution</CardTitle>
-            <CardDescription className="text-gray-500 dark:text-green-200">Protein, carbs and fat breakdown for today</CardDescription>
+            <CardTitle className="text-gray-800 dark:text-white text-sm sm:text-base">Macronutrient Distribution</CardTitle>
+            <CardDescription className="text-gray-500 dark:text-green-200 text-xs sm:text-sm">Protein, carbs and fat breakdown for today</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] relative z-10">
+          <CardContent className="h-[200px] sm:h-[300px] relative z-10">
             <NutrientChart protein={proteinConsumed} carbs={carbsConsumed} fat={fatConsumed} />
           </CardContent>
         </Card>
       </div>
 
-      <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-4 border-green-400 dark:border-green-600/30 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+      <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-2 border-green-400 dark:border-green-600/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
         <CardHeader>
-          <CardTitle className="text-gray-800 dark:text-white">Recent Meals</CardTitle>
-          <CardDescription className="text-gray-500 dark:text-green-200">Your latest food entries for today</CardDescription>
+          <CardTitle className="text-gray-800 dark:text-white text-sm sm:text-base">Recent Meals</CardTitle>
+          <CardDescription className="text-gray-500 dark:text-green-200 text-xs sm:text-sm">Your latest food entries for today</CardDescription>
         </CardHeader>
         <CardContent>
         {dailyEntries.length > 0 ? (
@@ -456,16 +456,16 @@ export default function Dashboard() {
                 key={index}
                 className="flex items-center justify-between p-3 rounded-lg bg-green-50/40 dark:bg-green-800/20 backdrop-blur-sm border-2 border-green-400 dark:border-green-600/15 hover:bg-green-100/40 dark:hover:bg-green-800/30 transition-all duration-200"
               >
-                <div>
-                  <div className="font-medium text-gray-800 dark:text-white">{entry.name}</div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-medium text-gray-800 dark:text-white truncate">{entry.name || entry.food_name || 'Unknown Food'}</div>
                   <div className="text-sm text-gray-500 dark:text-green-200">
-                    {entry.mealType} • {entry.servingSize}
+                    {entry.meal_type || entry.mealType || 'Meal'} • {entry.servingSize || '1 serving'}
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="font-medium text-gray-800 dark:text-white">{entry.calories} cal</div>
+                <div className="text-right ml-2">
+                  <div className="font-medium text-gray-800 dark:text-white">{entry.calories || 0} cal</div>
                   <div className="text-sm text-gray-500 dark:text-green-200">
-                    P: {entry.protein}g • C: {entry.carbs}g • F: {entry.fat}g
+                    P: {entry.protein || 0}g • C: {entry.carbs || 0}g • F: {entry.fat || 0}g
                   </div>
                 </div>
               </div>
