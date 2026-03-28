@@ -285,7 +285,7 @@ function SignInContent() {
           </Button>
 
           <div className="text-center space-y-4">
-            <div className="text-sm text-white-600 dark:text-white-700">
+            <div className="text-sm text-gray-700 dark:text-gray-300">
               Don't have an account?{" "}
               <Link href="/signup" className="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 font-medium">
                 Sign up

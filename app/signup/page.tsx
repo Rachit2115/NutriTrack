@@ -413,7 +413,7 @@ function SignUpContent() {
           </Button>
 
           <div className="text-center">
-            <div className="text-sm text-gray-600 dark:text-black-400/20">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
               Already have an account?{" "}
               <Link href="/signin" className="text-green-600 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 font-medium">
                 Sign in

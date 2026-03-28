@@ -344,7 +344,7 @@ export default function FoodTracker() {
                 Add Food
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
+            <DialogContent className="sm:max-w-[600px] w-[95vw] max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Add Food Entry</DialogTitle>
                 <DialogDescription>
@@ -459,7 +459,7 @@ export default function FoodTracker() {
                   />
                 </div>
 
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="calories">kcal</Label>
                     <Input
@@ -518,7 +518,7 @@ export default function FoodTracker() {
       </div>
 
       {/* Nutrition Summary */}
-      <div className="grid gap-4 md:grid-cols-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <Card className="bg-white/60 dark:bg-green-900/40 backdrop-blur-sm border-green-200/50 dark:border-green-700/50">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-green-700 dark:text-green-300">Total kcal</CardTitle>
@@ -557,7 +557,7 @@ export default function FoodTracker() {
       </div>
 
       {/* Meal Entries */}
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         {Object.entries(mealEntries).map(([mealType, mealTypeEntries]) => (
           <Card key={mealType} className="bg-white/60 dark:bg-green-900/40 backdrop-blur-sm border-green-200/50 dark:border-green-700/50">
             <CardHeader className="pb-3">
@@ -585,7 +585,7 @@ export default function FoodTracker() {
                             {entry.servingSize}
                           </div>
                         </div>
-                        <div className="flex items-center gap-3 ml-4">
+                        <div className="flex items-center gap-2 sm:gap-3 ml-2 sm:ml-4">
                           <div className="text-right shrink-0">
                             <div className="font-medium text-gray-900 dark:text-white">{entry.calories} kcal</div>
                             <div className="text-xs text-muted-foreground">

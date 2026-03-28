@@ -19,13 +19,13 @@ export default function HomePage() {
         {/* Hero Section */}
         <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
           <div className="w-full max-w-4xl text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
               Track Your Nutrition,
             </h1>
-            <h1 className="text-5xl md:text-6xl font-bold text-green-600 dark:text-green-400 mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-green-600 dark:text-green-400 mb-6">
               Transform Your Life
             </h1>
-            <p className="text-xl text-gray-700 dark:text-gray-300 mb-8">
+            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 mb-8 px-4 sm:px-0">
               NutriTrack helps you monitor calories, track your progress, and achieve your health goals with personalized insights and easy meal logging.
             </p>
             
@@ -51,13 +51,13 @@ export default function HomePage() {
         </div>
 
         {/* Second Hero Section */}
-        <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
+        <div className="relative z-10 py-16 sm:py-24 lg:py-32 flex items-center justify-center p-4">
           <div className="w-full max-w-6xl">
-            <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <div className="text-center mb-8 sm:mb-16">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
                 Everything You Need to Succeed
               </h1>
-              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+              <p className="text-base sm:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto px-4 sm:px-0">
                 Comprehensive tools designed to help you achieve your nutrition and fitness goals.
               </p>
             </div>
