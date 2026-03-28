@@ -383,19 +383,111 @@ export default function Dashboard() {
             </div>
           ) : (
             <div className="space-y-3">
-              {dailyEntries.map((entry, index) => (
+              {dailyEntries.map((entry, index) => {
+                // Get food emoji based on meal type or food name
+                const getFoodEmoji = () => {
+                  const name = (entry.name || entry.food_name || '').toLowerCase();
+                  const mealType = (entry.meal_type || '').toLowerCase();
+                  
+                  // Check food name first
+                  if (name.includes('pizza')) return '🍕';
+                  if (name.includes('burger')) return '🍔';
+                  if (name.includes('sandwich')) return '🥪';
+                  if (name.includes('salad')) return '🥗';
+                  if (name.includes('sushi')) return '🍱';
+                  if (name.includes('pasta') || name.includes('spaghetti')) return '🍝';
+                  if (name.includes('rice') || name.includes('biryani') || name.includes('fried rice')) return '🍚';
+                  if (name.includes('chicken') || name.includes('meat')) return '🍗';
+                  if (name.includes('fish') || name.includes('seafood')) return '🐟';
+                  if (name.includes('egg')) return '🥚';
+                  if (name.includes('bread') || name.includes('toast')) return '🍞';
+                  if (name.includes('pancake')) return '🥞';
+                  if (name.includes('waffle')) return '🧇';
+                  if (name.includes('croissant')) return '🥐';
+                  if (name.includes('bagel')) return '🥯';
+                  if (name.includes('donut') || name.includes('doughnut')) return '🍩';
+                  if (name.includes('cookie')) return '🍪';
+                  if (name.includes('cake')) return '🎂';
+                  if (name.includes('ice cream')) return '🍨';
+                  if (name.includes('chocolate')) return '🍫';
+                  if (name.includes('apple')) return '🍎';
+                  if (name.includes('banana')) return '🍌';
+                  if (name.includes('orange')) return '🍊';
+                  if (name.includes('grape')) return '🍇';
+                  if (name.includes('strawberry')) return '🍓';
+                  if (name.includes('watermelon')) return '🍉';
+                  if (name.includes('mango')) return '🥭';
+                  if (name.includes('pineapple')) return '🍍';
+                  if (name.includes('peach')) return '🍑';
+                  if (name.includes('pear')) return '🍐';
+                  if (name.includes('kiwi')) return '🥝';
+                  if (name.includes('avocado')) return '🥑';
+                  if (name.includes('tomato')) return '🍅';
+                  if (name.includes('carrot')) return '🥕';
+                  if (name.includes('broccoli')) return '🥦';
+                  if (name.includes('corn')) return '🌽';
+                  if (name.includes('potato')) return '🥔';
+                  if (name.includes('sweet potato')) return '🍠';
+                  if (name.includes('cucumber')) return '🥒';
+                  if (name.includes('mushroom')) return '🍄';
+                  if (name.includes('onion') || name.includes('garlic')) return '🧅';
+                  if (name.includes('pepper') || name.includes('chili')) return '🌶️';
+                  if (name.includes('leafy') || name.includes('spinach') || name.includes('lettuce')) return '🥬';
+                  if (name.includes('soup') || name.includes('stew')) return '🍲';
+                  if (name.includes('curry') || name.includes('masala') || name.includes('dal') || name.includes('paneer')) return '🍛';
+                  if (name.includes('noodle') || name.includes('ramen') || name.includes('pho')) return '🍜';
+                  if (name.includes('taco') || name.includes('burrito')) return '🌮';
+                  if (name.includes('falafel') || name.includes('hummus')) return '🧆';
+                  if (name.includes('dumpling')) return '🥟';
+                  if (name.includes('spring roll')) return '🥠';
+                  if (name.includes('pretzel')) return '🥨';
+                  if (name.includes('cheese')) return '🧀';
+                  if (name.includes('butter')) return '🧈';
+                  if (name.includes('bacon')) return '🥓';
+                  if (name.includes('hot dog') || name.includes('sausage')) return '🌭';
+                  if (name.includes('fries') || name.includes('french fries')) return '🍟';
+                  if (name.includes('popcorn')) return '🍿';
+                  if (name.includes('chips') || name.includes('crisps')) return '🥔';
+                  if (name.includes('milk') || name.includes('dairy')) return '🥛';
+                  if (name.includes('coffee')) return '☕';
+                  if (name.includes('tea')) return '🍵';
+                  if (name.includes('juice')) return '🧃';
+                  if (name.includes('soda') || name.includes('soft drink')) return '🥤';
+                  if (name.includes('beer')) return '🍺';
+                  if (name.includes('wine')) return '🍷';
+                  if (name.includes('cocktail')) return '🍸';
+                  if (name.includes('smoothie') || name.includes('shake')) return '🥤';
+                  if (name.includes('yogurt')) return '🥣';
+                  if (name.includes('cereal')) return '🥣';
+                  if (name.includes('oatmeal') || name.includes('oats')) return '🥣';
+                  if (name.includes('granola')) return '🥣';
+                  if (name.includes('honey')) return '🍯';
+                  if (name.includes('jam') || name.includes('jelly')) return '🍯';
+                  if (name.includes('peanut butter')) return '🥜';
+                  if (name.includes('nuts') || name.includes('almond') || name.includes('walnut')) return '🥜';
+                  if (name.includes('olive')) return '🫒';
+                  if (name.includes('coconut')) return '🥥';
+                  if (name.includes('lemon') || name.includes('lime')) return '🍋';
+                  if (name.includes('chestnut')) return '🌰';
+                  
+                  // Fall back to meal type
+                  if (mealType === 'breakfast') return '🍳';
+                  if (mealType === 'lunch') return '🍱';
+                  if (mealType === 'dinner') return '🍽️';
+                  if (mealType === 'snack') return '🍿';
+                  
+                  // Default
+                  return '🍽️';
+                };
+                
+                return (
                 <div
                   key={index}
                   className="flex items-center justify-between p-3 bg-white/60 dark:bg-green-800/40 rounded-lg border border-green-200/30 dark:border-green-700/30"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-100 dark:bg-green-800 rounded-full flex items-center justify-center">
-                      <span className="text-lg">
-                        {entry.meal_type === 'breakfast' ? '' : 
-                         entry.meal_type === 'lunch' ? '' : 
-                         entry.meal_type === 'dinner' ? '' : 
-                         entry.meal_type === 'snack' ? '' : ''}
-                      </span>
+                    <div className="w-10 h-10 bg-green-100 dark:bg-green-800 rounded-full flex items-center justify-center text-xl">
+                      {getFoodEmoji()}
                     </div>
                     <div>
                       <p className="font-medium text-gray-800 dark:text-white capitalize">
@@ -415,7 +507,8 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </CardContent>
@@ -442,51 +535,6 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="overflow-hidden bg-white/40 dark:bg-green-900/15 backdrop-blur-xl border-2 border-green-400 dark:border-green-600/30 shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <CardHeader>
-          <CardTitle className="text-gray-800 dark:text-white text-sm sm:text-base">Recent Meals</CardTitle>
-          <CardDescription className="text-gray-500 dark:text-green-200 text-xs sm:text-sm">Your latest food entries for today</CardDescription>
-        </CardHeader>
-        <CardContent>
-        {dailyEntries.length > 0 ? (
-          <div className="space-y-3">
-            {dailyEntries.map((entry, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between p-3 rounded-lg bg-green-50/40 dark:bg-green-800/20 backdrop-blur-sm border-2 border-green-400 dark:border-green-600/15 hover:bg-green-100/40 dark:hover:bg-green-800/30 transition-all duration-200"
-              >
-                <div className="min-w-0 flex-1">
-                  <div className="font-medium text-gray-800 dark:text-white truncate">{entry.name || entry.food_name || 'Unknown Food'}</div>
-                  <div className="text-sm text-gray-500 dark:text-green-200">
-                    {entry.meal_type || entry.mealType || 'Meal'} • {entry.servingSize || '1 serving'}
-                  </div>
-                </div>
-                <div className="text-right ml-2">
-                  <div className="font-medium text-gray-800 dark:text-white">{entry.calories || 0} cal</div>
-                  <div className="text-sm text-gray-500 dark:text-green-200">
-                    P: {entry.protein || 0}g • C: {entry.carbs || 0}g • F: {entry.fat || 0}g
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <div className="mb-4 text-6xl">🍽️</div>
-            <p className="text-gray-500 dark:text-green-200 mb-2">
-              No meals logged for today. Go to the Food Tracker to add your meals.
-            </p>
-            <Button 
-              className="bg-green-600 hover:bg-green-700 text-white"
-              onClick={() => router.push('/food-tracker')}
-            >
-              Go to Food Tracker
-            </Button>
-          </div>
-        )}
-      </CardContent>
-    </Card>
     </div>
     </>
   )

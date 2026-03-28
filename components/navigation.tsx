@@ -96,6 +96,10 @@ export function Navigation() {
 
   const handleNavClick = (tab: string) => {
     setActiveTab?.(tab)
+    // Navigate to home page to ensure the tab switch works
+    if (tab !== 'dashboard' || window.location.pathname !== '/home') {
+      router.push('/home')
+    }
   }
 
   const handleSignOut = async () => {
