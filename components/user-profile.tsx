@@ -75,6 +75,53 @@ export default function UserProfile() {
     setGoalCalories(calculatedGoalCalories)
   }
 
+  // Calculate macro targets based on scientific formulas
+  const calculateMacroTargets = () => {
+    const data = form.getValues()
+    if (!data.weight) {
+      return { protein: 150, fat: 65, carbs: 250 }
+    }
+
+    const weightKg = Number(data.weight)
+    const goal = data.goal || 'maintenance'
+
+    // Protein Factor based on goal
+    let proteinFactor = 1.0 // Normal health default
+    if (goal === 'weight-loss') {
+      proteinFactor = 1.4 // Middle of 1.2-1.6 range
+    } else if (goal === 'muscle-gain') {
+      proteinFactor = 1.9 // Middle of 1.6-2.2 range
+    } else if (goal === 'maintenance') {
+      proteinFactor = 0.9 // Middle of 0.8-1.0 range
+    }
+
+    // Fat Factor based on goal
+    let fatFactor = 0.8 // Normal default
+    if (goal === 'weight-loss') {
+      fatFactor = 0.6 // Low fat diet
+    } else if (goal === 'muscle-gain') {
+      fatFactor = 0.9 // Middle of 0.8-1.0 range
+    }
+
+    // Calculate Protein: Weight (kg) × Protein Factor
+    const proteinGrams = Math.round(weightKg * proteinFactor)
+
+    // Calculate Fat: Weight (kg) × Fat Factor
+    const fatGrams = Math.round(weightKg * fatFactor)
+
+    // Calculate Carbs: (Total Calories - (Protein×4 + Fat×9)) / 4
+    const caloriesFromProtein = proteinGrams * 4
+    const caloriesFromFat = fatGrams * 9
+    const remainingCalories = (goalCalories || tdee || 2000) - (caloriesFromProtein + caloriesFromFat)
+    const carbsGrams = Math.max(0, Math.round(remainingCalories / 4))
+
+    return {
+      protein: proteinGrams,
+      fat: fatGrams,
+      carbs: carbsGrams
+    }
+  }
+
   function onSubmit(data: any) {
     saveUserProfile(data)
     updateCalculations(data)
@@ -370,6 +417,27 @@ export default function UserProfile() {
                     : form.getValues().goal === "muscle-gain"
                       ? "kcal surplus for muscle gain"
                       : "Maintenance kcal"}
+                </p>
+              </div>
+
+              <div className="space-y-3 pt-4 border-t border-border">
+                <h3 className="font-medium">Daily Macro Targets</h3>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                    <div className="text-2xl font-bold text-red-600">{calculateMacroTargets().protein}g</div>
+                    <div className="text-sm text-muted-foreground">Protein</div>
+                  </div>
+                  <div className="text-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                    <div className="text-2xl font-bold text-yellow-600">{calculateMacroTargets().fat}g</div>
+                    <div className="text-sm text-muted-foreground">Fat</div>
+                  </div>
+                  <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600">{calculateMacroTargets().carbs}g</div>
+                    <div className="text-sm text-muted-foreground">Carbs</div>
+                  </div>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Based on {String(form.getValues().weight)}kg body weight and {String(form.getValues().goal)?.replace('-', ' ')} goal
                 </p>
               </div>
             </>

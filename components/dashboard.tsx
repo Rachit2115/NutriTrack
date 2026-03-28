@@ -33,6 +33,8 @@ export default function Dashboard() {
   const [carbsConsumed, setCarbsConsumed] = useState(0)
   const [fatConsumed, setFatConsumed] = useState(0)
 
+  const goalCalories = userProfile?.goalCalories || 2000
+
   // Calculate macro targets based on scientific formulas
   const calculateMacroTargets = (profile: any) => {
     if (!profile || !profile.weight) {
@@ -41,6 +43,31 @@ export default function Dashboard() {
 
     const weightKg = profile.weight
     const goal = profile.goal || 'maintenance'
+
+    // Calculate TDEE first
+    let bmr
+    if (profile.gender === "male") {
+      bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5
+    } else {
+      bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161
+    }
+
+    const activityMultipliers: Record<string, number> = {
+      sedentary: 1.2,
+      light: 1.375,
+      moderate: 1.55,
+      active: 1.725,
+      "very-active": 1.9,
+    }
+    const tdee = Math.round(bmr * (activityMultipliers[profile.activityLevel] || 1.2))
+
+    // Adjust calories based on goal
+    let targetCalories = tdee
+    if (goal === "weight-loss") {
+      targetCalories = Math.round(tdee * 0.8)
+    } else if (goal === "muscle-gain") {
+      targetCalories = Math.round(tdee * 1.1)
+    }
 
     // Protein Factor based on goal
     let proteinFactor = 1.0 // Normal health default
@@ -69,7 +96,7 @@ export default function Dashboard() {
     // Calculate Carbs: (Total Calories - (Protein×4 + Fat×9)) / 4
     const caloriesFromProtein = proteinGrams * 4
     const caloriesFromFat = fatGrams * 9
-    const remainingCalories = goalCalories - (caloriesFromProtein + caloriesFromFat)
+    const remainingCalories = targetCalories - (caloriesFromProtein + caloriesFromFat)
     const carbsGrams = Math.max(0, Math.round(remainingCalories / 4))
 
     return {
@@ -342,7 +369,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-2 md:grid-cols-4">
         {/* Daily Calorie Goal - Green card */}
         <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-green-400 dark:border-green-600/40 hover:shadow-xl transition-all duration-300" style={{ backgroundImage: 'url(/cal_goal_bg_logo.png)', backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
           <div className="absolute inset-0 bg-gradient-to-br from-green-200/50 to-green-100/30 dark:from-green-900/60 dark:to-green-800/40"></div>
@@ -402,48 +429,6 @@ export default function Dashboard() {
           <CardContent className="relative z-10">
             <div className="text-xl sm:text-2xl md:text-3xl font-bold text-teal-900 dark:text-white">{dailyEntries.length}</div>
             <p className="text-xs sm:text-xs text-teal-700 dark:text-teal-200 hidden sm:block">Meals and snacks logged today</p>
-          </CardContent>
-        </Card>
-
-        {/* Protein Target - Red/Pink card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-red-400 dark:border-red-600/40 hover:shadow-xl transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-red-200/50 to-pink-100/30 dark:from-red-900/60 dark:to-red-800/40"></div>
-          <div className="absolute inset-0 bg-gradient-radial from-red-200/20 dark:from-red-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-xs sm:text-sm font-medium text-red-800 dark:text-white">Protein Target</CardTitle>
-            <span className="text-lg">🥩</span>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-red-900 dark:text-white">{macroTargets.protein}g</div>
-            <p className="text-xs sm:text-xs text-red-700 dark:text-red-200 hidden sm:block">{Math.round((proteinConsumed / macroTargets.protein) * 100)}% consumed</p>
-          </CardContent>
-        </Card>
-
-        {/* Fat Target - Yellow/Amber card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-yellow-400 dark:border-yellow-600/40 hover:shadow-xl transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-yellow-200/50 to-amber-100/30 dark:from-yellow-900/60 dark:to-yellow-800/40"></div>
-          <div className="absolute inset-0 bg-gradient-radial from-yellow-200/20 dark:from-yellow-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-xs sm:text-sm font-medium text-yellow-800 dark:text-white">Fat Target</CardTitle>
-            <span className="text-lg">🥑</span>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-900 dark:text-white">{macroTargets.fat}g</div>
-            <p className="text-xs sm:text-xs text-yellow-700 dark:text-yellow-200 hidden sm:block">{Math.round((fatConsumed / macroTargets.fat) * 100)}% consumed</p>
-          </CardContent>
-        </Card>
-
-        {/* Carbs Target - Blue/Cyan card */}
-        <Card className="relative overflow-hidden backdrop-blur-xl shadow-lg border-2 border-blue-400 dark:border-blue-600/40 hover:shadow-xl transition-all duration-300">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-200/50 to-cyan-100/30 dark:from-blue-900/60 dark:to-blue-800/40"></div>
-          <div className="absolute inset-0 bg-gradient-radial from-blue-200/20 dark:from-blue-600/10 via-transparent to-transparent"></div>
-          <CardHeader className="pb-1 sm:pb-2 flex flex-row items-center justify-between space-y-0 relative z-10">
-            <CardTitle className="text-xs sm:text-sm font-medium text-blue-800 dark:text-white">Carbs Target</CardTitle>
-            <span className="text-lg">🍞</span>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-blue-900 dark:text-white">{macroTargets.carbs}g</div>
-            <p className="text-xs sm:text-xs text-blue-700 dark:text-blue-200 hidden sm:block">{Math.round((carbsConsumed / macroTargets.carbs) * 100)}% consumed</p>
           </CardContent>
         </Card>
       </div>
