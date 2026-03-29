@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -27,7 +27,14 @@ function SignInContent() {
   const [errors, setErrors] = useState<ValidationErrors>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const router = useRouter()
-  const { signIn, signInWithGoogle } = useAuth()
+  const { signIn, signInWithGoogle, user } = useAuth()
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      router.push("/home")
+    }
+  }, [user, router])
 
   const validateEmail = (value: string): string | undefined => {
     if (!value.trim()) return "Email is required"
@@ -110,7 +117,7 @@ function SignInContent() {
       }
       
       // Only redirect if signin was successful
-      router.push("/home")
+      window.location.href = "/home"
     } catch (err) {
       setError("An unexpected error occurred. Please try again.")
     } finally {

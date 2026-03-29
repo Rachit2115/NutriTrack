@@ -331,20 +331,114 @@ export function Navigation() {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - Show Profile button when authenticated, hamburger when not */}
           <div className="md:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-              ) : (
-                <Menu className="h-6 w-6 text-gray-700 dark:text-gray-200" />
-              )}
-            </Button>
+            {user ? (
+              <div className="relative" ref={dropdownRef}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                >
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden">
+                    {profileAvatar ? (
+                      <img 
+                        src={profileAvatar} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+                        <span className="text-xs font-medium text-green-600 dark:text-green-400">
+                          {getUserInitials(getDisplayName())}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <ChevronDown className="h-4 w-4 text-gray-500" />
+                </Button>
+                
+                {isProfileDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
+                    <button 
+                      onClick={() => {
+                        router.push('/home')
+                        setIsProfileDropdownOpen(false)
+                      }}
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer w-full text-left"
+                    >
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      Dashboard
+                    </button>
+                    <button 
+                      onClick={() => {
+                        handleNavClick('profile')
+                        setIsProfileDropdownOpen(false)
+                      }}
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer w-full text-left"
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      Profile
+                    </button>
+                    <button 
+                      onClick={() => {
+                        handleNavClick('meal-planner')
+                        setIsProfileDropdownOpen(false)
+                      }}
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer w-full text-left md:hidden"
+                    >
+                      <span className="h-4 w-4 mr-2">🍽️</span>
+                      Meal Planner
+                    </button>
+                    <button 
+                      onClick={() => {
+                        handleNavClick('food-tracker')
+                        setIsProfileDropdownOpen(false)
+                      }}
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer w-full text-left md:hidden"
+                    >
+                      <span className="h-4 w-4 mr-2">🍎</span>
+                      Food Tracker
+                    </button>
+                    <button 
+                      onClick={() => {
+                        handleNavClick('health-tips')
+                        setIsProfileDropdownOpen(false)
+                      }}
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer w-full text-left md:hidden"
+                    >
+                      <span className="h-4 w-4 mr-2">💡</span>
+                      Health Tips
+                    </button>
+                    <hr className="my-1 border-gray-200 dark:border-gray-700" />
+                    <div 
+                      className="flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+                      onClick={() => {
+                        handleSignOut()
+                        setIsProfileDropdownOpen(false)
+                      }}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Sign Out
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                ) : (
+                  <Menu className="h-6 w-6 text-gray-700 dark:text-gray-200" />
+                )}
+              </Button>
+            )}
           </div>
         </div>
 

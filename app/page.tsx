@@ -30,7 +30,7 @@ export default function HomePage() {
             </p>
             
             {/* Features Row */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div className="flex flex-col items-center">
                 <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400 mb-3" />
                 <h3 className="text-gray-900 dark:text-white font-semibold mb-1">Free Forever</h3>
@@ -46,6 +46,25 @@ export default function HomePage() {
                 <h3 className="text-gray-900 dark:text-white font-semibold mb-1">Easy to Use</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">Simple interface</p>
               </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+              <Button 
+                size="lg" 
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                onClick={() => window.location.href = '/signup'}
+              >
+                Get Started
+              </Button>
+              <Button 
+                variant="outline"
+                size="lg" 
+                className="border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 px-8 py-6 text-lg font-semibold rounded-full transition-all duration-300"
+                onClick={() => window.location.href = '/signin'}
+              >
+                Sign In
+              </Button>
             </div>
           </div>
         </div>

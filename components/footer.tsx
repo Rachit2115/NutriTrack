@@ -83,11 +83,11 @@ export function Footer() {
                     Blog
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link href="/careers" className="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 text-sm transition-colors">
                     Careers
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="/contact" className="text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 text-sm transition-colors">
                     Contact

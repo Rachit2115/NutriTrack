@@ -38,7 +38,14 @@ function SignUpContent() {
   const [errors, setErrors] = useState<ValidationErrors>({})
   const [touched, setTouched] = useState<Record<string, boolean>>({})
   const router = useRouter()
-  const { signUp, signInWithGoogle } = useAuth()
+  const { signUp, signInWithGoogle, user } = useAuth()
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (user) {
+      router.push("/home")
+    }
+  }, [user, router])
 
   // Password requirements
   const passwordRequirements: PasswordRequirement[] = [
@@ -152,9 +159,15 @@ function SignUpContent() {
         return // Don't redirect if there's an error
       }
       
-      // Show success message for email verification
-      setSuccessMessage("Account created successfully! Check your email and verify to continue...")
-      return // Don't redirect, let user see the message
+      // Check if email confirmation is required (no auto-login)
+      if (result.message && result.message.includes("email")) {
+        setSuccessMessage(result.message)
+        return // Don't redirect, let user see the message
+      }
+      
+      // Auto-login successful - redirect to home
+      console.log('🔐 Auth state updated, user can now access content')
+      router.push("/home")
     } catch (err) {
       setError("An unexpected error occurred. Please try again.")
     } finally {
