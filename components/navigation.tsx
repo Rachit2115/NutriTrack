@@ -31,6 +31,11 @@ const getUserInitials = (name: string) => {
 export function Navigation() {
   const { user, signOut } = useAuth()
   const router = useRouter()
+  
+  // Debug logging for user state
+  useEffect(() => {
+    console.log('🔐 Navigation: User state changed:', { user: !!user, userId: user?.id })
+  }, [user])
   const { theme, setTheme } = useTheme()
   const profileContext = getProfileContext()
   const { setActiveTab, currentProfile, profileAvatar } = profileContext || {}
